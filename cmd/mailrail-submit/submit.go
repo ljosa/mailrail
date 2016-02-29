@@ -1,12 +1,10 @@
-// The standalone command adds a spec to a pqueue then processes a
-// single job from that queue.
+// The submit command adds a spec to a pqueue.
 package main
 
 import (
 	"flag"
 	"fmt"
 	"github.com/ljosa/go-pqueue/pqueue"
-	"github.com/ljosa/mailrail"
 	"io/ioutil"
 	"log"
 	"os"
@@ -33,11 +31,9 @@ func main() {
 	j, err := q.CreateJob("standalone")
 	j.Set("spec", spec)
 	j.Submit()
-	mailrail.ProcessOne(queueDir, mailrail.DoNotMangle)
 }
 
 func usage() {
 	fmt.Fprintf(os.Stderr, "Usage: %s QUEUE-DIR SPEC-FILE\n", path.Base(os.Args[0]))
 	flag.PrintDefaults()
-	fmt.Fprintf(os.Stderr, "\nYou must set the AWS_DEFAULT_REGION environment variable\n(e.g., to `us-east-1`).\n")
 }
